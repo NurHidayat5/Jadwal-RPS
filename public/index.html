@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Laeli & Natta | Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <!-- Decorative Background Elements -->
+    <div class="bg-blur-circle circle-1"></div>
+    <div class="bg-blur-circle circle-2"></div>
+    <div class="bg-blur-circle circle-3"></div>
+
+    <div class="mobile-header">
+        <div class="logo">Laeli & <span>Natta</span></div>
+    </div>
+
+    <div class="sidebar">
+        <div class="logo">Laeli & <span>Natta</span></div>
+        <nav>
+            <a href="#" class="nav-link active" data-page="dashboard"><i class="icon">🏠</i> <span>Dashboard</span></a>
+            <a href="#" class="nav-link" data-page="filter"><i class="icon">🔍</i> <span>Filter Jadwal</span></a>
+            <a href="#" class="nav-link" data-page="admin"><i class="icon">⚙️</i> <span>Admin Panel</span></a>
+        </nav>
+    </div>
+
+    <main class="content">
+        <!-- Page: Dashboard -->
+        <div id="page-dashboard" class="page active">
+            <header>
+                <h1>Dashboard Utama</h1>
+                <p id="current-time">Memuat waktu...</p>
+            </header>
+
+            <section class="room-status-grid" id="room-grid">
+                <div class="skeleton-card"></div>
+                <div class="skeleton-card"></div>
+                <div class="skeleton-card"></div>
+                <div class="skeleton-card"></div>
+                <div class="skeleton-card"></div>
+            </section>
+
+            <section class="happening-now">
+                <h2>Sedang Berlangsung</h2>
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Ruangan</th>
+                                <th>Guru</th>
+                                <th>Kelas</th>
+                                <th>Waktu</th>
+                            </tr>
+                        </thead>
+                        <tbody id="active-schedules">
+                            <tr>
+                                <td colspan="4" class="empty">Belum ada jadwal aktif saat ini.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <section class="overall-schedule" style="margin-top: 3rem;">
+                <h2>Jadwal Keseluruhan</h2>
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Hari</th>
+                                <th>Waktu</th>
+                                <th>Ruangan</th>
+                                <th>Guru</th>
+                                <th>Kelas</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody id="all-dashboard-schedules">
+                            <tr>
+                                <td colspan="6" class="empty">Memuat data jadwal...</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        </div>
+
+        <!-- Page: Filter -->
+        <div id="page-filter" class="page">
+            <header>
+                <h1>Filter Jadwal</h1>
+                <p>Cari jadwal berdasarkan Guru atau Ruangan</p>
+            </header>
+
+            <section class="filter-controls">
+                <div class="control-group">
+                    <label>Berdasarkan Guru</label>
+                    <select id="filter-teacher">
+                        <option value="">Pilih Guru...</option>
+                    </select>
+                </div>
+                <div class="control-group">
+                    <label>Berdasarkan Ruangan</label>
+                    <select id="filter-room">
+                        <option value="">Pilih Ruangan...</option>
+                    </select>
+                </div>
+            </section>
+
+            <section class="filter-results">
+                <div class="section-header">
+                    <h2>Hasil Pencarian</h2>
+                    <button id="btn-print-filter" class="btn-secondary btn-sm">🖨️ Cetak Hasil</button>
+                </div>
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Hari</th>
+                                <th>Jam</th>
+                                <th>Ruangan / Guru</th>
+                                <th>Kelas</th>
+                            </tr>
+                        </thead>
+                        <tbody id="filter-results-body">
+                            <tr>
+                                <td colspan="4" class="empty">Silakan pilih filter untuk melihat data.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        </div>
+
+        <!-- Page: Admin -->
+        <div id="page-admin" class="page">
+            <header>
+                <h1>Admin Panel</h1>
+                <p>Manajemen Jadwal & Smart Booking</p>
+            </header>
+
+            <div id="admin-login-section">
+                <div class="login-card">
+                    <h3>Login Admin</h3>
+                    <input type="password" id="admin-pass" placeholder="Masukkan Password (admin123)">
+                    <button id="btn-login" class="btn-primary">Masuk</button>
+                </div>
+            </div>
+
+            <div id="admin-dashboard-section" style="display: none;">
+                <section class="admin-actions">
+                    <button id="btn-show-add" class="btn-primary">+ Tambah Jadwal Baru</button>
+                    <button id="btn-logout" class="btn-secondary">Keluar</button>
+                </section>
+
+                <div id="add-schedule-modal" class="modal" style="display: none;">
+                    <div class="modal-content">
+                        <h3>Tambah/Booking Jadwal</h3>
+                        <form id="schedule-form">
+                            <div class="form-grid">
+                                <div class="form-group">
+                                    <label>Hari</label>
+                                    <select id="form-day" required>
+                                        <option value="Senin">Senin</option>
+                                        <option value="Selasa">Selasa</option>
+                                        <option value="Rabu">Rabu</option>
+                                        <option value="Kamis">Kamis</option>
+                                        <option value="Jumat">Jumat</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label>Ruangan</label>
+                                    <select id="form-room" required></select>
+                                </div>
+                                <div class="form-group">
+                                    <label>Guru / Peminjam</label>
+                                    <input type="text" id="form-teacher-input" placeholder="Ketik nama atau pilih..."
+                                        list="teacher-list" required>
+                                    <datalist id="teacher-list"></datalist>
+                                </div>
+                                <div class="form-group">
+                                    <label>Kelas</label>
+                                    <select id="form-class" required></select>
+                                </div>
+                                <div class="form-group">
+                                    <label>Jam Mulai (Jam Ke-)</label>
+                                    <input type="number" id="form-start" min="1" max="12" value="1" required>
+                                </div>
+                                <div class="form-group">
+                                    <label>Jam Selesai (Jam Ke-)</label>
+                                    <input type="number" id="form-end" min="1" max="12" value="4" required>
+                                </div>
+                            </div>
+                            <div class="form-footer">
+                                <button type="button" id="btn-close-modal" class="btn-secondary">Batal</button>
+                                <button type="submit" class="btn-primary">Simpan Jadwal</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <section class="all-schedules-list">
+                    <div class="section-header">
+                        <h3>Daftar Seluruh Jadwal</h3>
+                        <button id="btn-print-admin" class="btn-secondary btn-sm">🖨️ Cetak Daftar</button>
+                    </div>
+                    <div class="table-container">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Hari</th>
+                                    <th>Waktu</th>
+                                    <th>Ruangan</th>
+                                    <th>Guru</th>
+                                    <th>Kelas</th>
+                                    <th>Aksi</th>
+                                </tr>
+                            </thead>
+                            <tbody id="admin-schedules-body"></tbody>
+                        </table>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </main>
+
+    <div id="toast-container" class="toast-container"></div>
+    <script src="script.js"></script>
+</body>
+
+</html>
